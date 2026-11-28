@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS handoff_receipts (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    listing_id BIGINT NOT NULL UNIQUE,
+    restaurant_id BIGINT NOT NULL,
+    ngo_id BIGINT NOT NULL,
+    otp_hash VARCHAR(255) NOT NULL,
+    otp_verified BOOLEAN NOT NULL DEFAULT FALSE,
+    tax_sync_status VARCHAR(20) NOT NULL DEFAULT 'PENDING'
+        CHECK (tax_sync_status IN ('PENDING', 'SYNCED', 'FAILED')),
+    pdf_file_path VARCHAR(500) NULL,
+    completed_at TIMESTAMPTZ NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
